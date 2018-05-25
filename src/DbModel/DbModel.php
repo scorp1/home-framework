@@ -2,7 +2,8 @@
 
 namespace Otus\DbModel;
 
-use Otus\DbModel\DbConnection;
+use PDO;
+
 class DbModel
 {
     /**
@@ -37,6 +38,12 @@ class DbModel
         return $this;
     }
 
+    /**
+     * @param string $nameParameter
+     * @param $value
+     *
+     * @return $this
+     */
     public function bind(string $nameParameter, $value)
     {
         $typeParameter = \PDO::PARAM_STR;

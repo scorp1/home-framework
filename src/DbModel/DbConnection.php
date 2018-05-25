@@ -13,18 +13,21 @@ class DbConnection
 
     private $dbParams;
 
-    public function __construct(DbParams $dbParams)
+    /**
+     * DbConnection constructor.
+     *
+     * @param string $dsn
+     * @param string $user
+     * @param string $pass]
+     */
+    public function __construct(string $dsn, string $user, string $pass)
     {
-        $this->dbParams = $dbParams;
+        $this->connection = new \PDO($dsn, $user, $pass);
     }
 
-    public function connect()
-    {
-        $this->connection = new PDO($this->dbParams->getDSN(), $this->dbParams->getUser(), $this->dbParams->getPassword());
-
-        return $this;
-    }
-
+    /**
+     * @return PDO|string
+     */
     public function getConnection()
     {
         if(isset($this->connection)){
