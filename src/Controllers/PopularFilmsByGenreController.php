@@ -2,10 +2,12 @@
 
 namespace Otus\Controllers;
 
+use Otus\Core\Response;
 use Otus\Interfaces\ControllerInterface;
 use Otus\Interfaces\FilmRepositoryInterface;
 use Otus\Interfaces\RequestInterface;
 use Otus\Interfaces\ResponseInterface;
+use Otus\Services\FilmByGenreService;
 
 class PopularFilmsByGenreController implements ControllerInterface
 {
@@ -15,13 +17,18 @@ class PopularFilmsByGenreController implements ControllerInterface
     private $filmRepository;
 
     /**
+     * @var FilmByGenreService
+     */
+    private $filmService;
+    /**
      * PopularFilmsByGenreController constructor.
      *
      * @param FilmRepositoryInterface $filmRepository
      */
-    public function __construct(FilmRepositoryInterface $filmRepository)
+    public function __construct(FilmRepositoryInterface $filmRepository, FilmByGenreService $filmByGenreService)
     {
         $this->filmRepository = $filmRepository;
+        $this->filmService = $filmByGenreService;
     }
 
     /**
@@ -29,7 +36,9 @@ class PopularFilmsByGenreController implements ControllerInterface
      */
     public function execute(RequestInterface $request): ResponseInterface
     {
-        // TODO: Implement execute() method.
+        $genreList = $request->getParam('genres');
+        $result = $this->filmService->getFilms($genreList);
 
+        return new Response($result);
     }
 }

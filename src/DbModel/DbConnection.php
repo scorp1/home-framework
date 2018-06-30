@@ -11,8 +11,6 @@ class DbConnection
      */
     private $connection;
 
-    private $dbParams;
-
     /**
      * DbConnection constructor.
      *
@@ -30,15 +28,6 @@ class DbConnection
      */
     public function getConnection()
     {
-        if(isset($this->connection)){
-            try{
-                echo "все ок";
-                return $this->connection;
-            }catch (\PDOException $e){
-                return $e->getMessage();
-            }
-
-        }
-        print_r("Не работает!");
+        return $this->connection;
     }
 }

@@ -2,10 +2,12 @@
 
 namespace Otus\Controllers;
 
+use Otus\Core\Response;
 use Otus\Interfaces\ControllerInterface;
 use Otus\Interfaces\FilmRepositoryInterface;
 use Otus\Interfaces\RequestInterface;
 use Otus\Interfaces\ResponseInterface;
+use Otus\Services\FilmByPeriodService;
 
 class PopularFilmsByPeriodController implements ControllerInterface
 {
@@ -15,13 +17,19 @@ class PopularFilmsByPeriodController implements ControllerInterface
     private $filmRepository;
 
     /**
+     * @var FilmByPeriodService
+     */
+    private $filmService;
+
+    /**
      * PopularFilmsByGenreController constructor.
      *
      * @param FilmRepositoryInterface $filmRepository
      */
-    public function __construct(FilmRepositoryInterface $filmRepository)
+    public function __construct(FilmRepositoryInterface $filmRepository, FilmByPeriodService $filmByPeriodService)
     {
         $this->filmRepository = $filmRepository;
+        $this->filmService = $filmByPeriodService;
     }
 
     /**
@@ -29,6 +37,9 @@ class PopularFilmsByPeriodController implements ControllerInterface
      */
     public function execute(RequestInterface $request): ResponseInterface
     {
-        // TODO: Implement execute() method.
+        $period = explode('-', $request->getParam('period'));
+        $result = $this->filmService->getFilms($period[0],$period[1]);
+
+        return new Response($result);
     }
 }

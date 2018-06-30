@@ -16,6 +16,7 @@ class DbModel
      */
     private $statement;
 
+    private $statementExecute;
     /**
      * DbModel constructor.
      *
@@ -34,6 +35,13 @@ class DbModel
     public function statement(string $query)
     {
         $this->statement = $this->connection->getConnection()->prepare($query);
+
+        return $this;
+    }
+
+    public function exec()
+    {
+        $this->statementExecute = $this->statement->execute();
 
         return $this;
     }

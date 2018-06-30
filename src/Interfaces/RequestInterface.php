@@ -13,4 +13,14 @@ interface RequestInterface
      * @return string|null
      */
     public function getParam(string $key, string $default = null): ?string;
+
+    /**
+     * @return mixed
+     */
+    public function getValue();
+
+    /**
+     * @return mixed
+     */
+    public function getUri();
 }
