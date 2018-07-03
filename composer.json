@@ -4,7 +4,9 @@
     "authors": [
         {
             "name": "Artemiy Pulyavin",
-            "email": "artemiy@pulyavin.ru"
+            "email": "artemiy@pulyavin.ru",
+            "name": "Beloplotov Vladimir",
+            "email": "cgartscorp@gmail.com"
         }
     ],
     "require": {
