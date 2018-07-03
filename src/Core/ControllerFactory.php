@@ -30,10 +30,12 @@ class ControllerFactory implements ControllerFactoryInterface
      */
     public function getController(RequestInterface $request): ControllerInterface
     {
-        // TODO: Implement getController() method.
-        $uri = trim(current(explode('?', $request->getUri())),'/');
-        $controller = !empty($this->router[$uri]) ? $this->router[$uri] : null;
+            $uri = trim(current(explode('?', $request->getUri())), '/');
+            $controller = !empty($this->router[$uri]) ? $this->router[$uri] : null;
 
+            if(empty($controller)){
+                throw new ControllerNotFoundException(sprintf("Not Found Controller", $uri));
+            }
         return $controller;
     }
 }

@@ -2,13 +2,9 @@
 
 namespace Otus\Repositories;
 
-use Otus\Core\FilmBuilder;
 use Otus\DbModel\DbConnection;
-use Otus\DbModel\DbModel;
 use Otus\Interfaces\FilmRepositoryInterface;
-use Otus\Interfaces\FilmInterface;
-use PDO;
-use PDOStatement;
+
 
 class FilmRepository implements FilmRepositoryInterface
 {
@@ -17,7 +13,6 @@ class FilmRepository implements FilmRepositoryInterface
      */
     public $dbConnection;
 
-    private $filmBuilder;
     /**
      * FilmRepository constructor.
      *
@@ -39,11 +34,11 @@ class FilmRepository implements FilmRepositoryInterface
                       INNER JOIN ratings AS r ON m.id = r.movie_id
                       INNER JOIN genres_movies AS gm ON  r.movie_id = gm.movie_id
                       INNER JOIN genres AS g ON g.id = gm.genre_id
-                    WHERE g.name in ('.$genres.') AND r.rating > 3 LIMIT 20;';
+                    WHERE g.name in ('.$genres.') AND r.rating > 3 LIMIT 100;';
 
         $sth = $this->dbConnection->getConnection()->query($query);
         $sth->execute();
-        $result = $sth->fetchAll(\PDO::FETCH_GROUP);
+        $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
        return $result;
     }
@@ -60,11 +55,12 @@ class FilmRepository implements FilmRepositoryInterface
                   INNER JOIN users AS u ON u.id = r.user_id
                   INNER JOIN occupations AS o ON o.id = u.occupation_id
                   WHERE o.name IN ('.$professionsList.')
-                  AND r.rating > 3 LIMIT 50;';
+                  AND r.rating > 3 LIMIT 100;';
+
 
         $sth = $this->dbConnection->getConnection()->query($query);
         $sth->execute();
-        $result = $sth->fetchAll(\PDO::FETCH_GROUP);
+        $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
         return $result;
     }
@@ -76,10 +72,10 @@ class FilmRepository implements FilmRepositoryInterface
         $query = 'SELECT m.title, u.age FROM movie AS m
                   INNER JOIN ratings AS r ON r.movie_id = m.id
                   INNER JOIN users AS u ON u.id = r.user_id
-                  WHERE u.age > ('.$fromAge.') and u.age < ('.$toAge.') and r.rating = 5 LIMIT 200;';
+                  WHERE u.age > ('.$fromAge.') and u.age < ('.$toAge.') and r.rating = 5 LIMIT 100;';
         $sth = $this->dbConnection->getConnection()->query($query);
         $sth->execute();
-        $result = $sth->fetchAll(\PDO::FETCH_GROUP);
+        $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
         return $result;
     }
@@ -99,21 +95,9 @@ class FilmRepository implements FilmRepositoryInterface
 
         $sth = $this->dbConnection->getConnection()->query($query);
         $sth->execute();
-        $result = $sth->fetchAll(\PDO::FETCH_GROUP);
+        $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
         return $result;
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    private function getArrayObjectFilm(array $data): array
-    {
-        return array_map(function ($item) {
-
-            return $this->filmBuilder->getFilm($item);
-        }, $data);
     }
 
     /**

@@ -10,4 +10,6 @@ interface ResponseInterface
      * @return string
      */
     public function getResponse(): string;
+
+    public function getFormatHTMLResponse();
 }

@@ -9,7 +9,7 @@ interface FilmInterface
      *
      * @return int
      */
-    public function getId(): int;
+    public function getAge(): int;
 
     /**
      * Returns title of this film
@@ -23,5 +23,5 @@ interface FilmInterface
      *
      * @return string
      */
-    public function getReleaseDate(): string;
+    public function getName(): string;
 }

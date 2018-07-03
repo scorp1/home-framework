@@ -7,11 +7,6 @@ use Otus\Interfaces\FilmInterface;
 class Film implements FilmInterface
 {
     /**
-     * @var int
-     */
-    private $id;
-
-    /**
      * @var string
      */
     private $title;
@@ -19,7 +14,12 @@ class Film implements FilmInterface
     /**
      * @var string
      */
-    private $releaseDate;
+    private $name;
+
+    /**
+     * @var int
+     */
+    private $age;
 
     /**
      * Film constructor.
@@ -28,19 +28,19 @@ class Film implements FilmInterface
      * @param string $title
      * @param string $releaseDate
      */
-    public function __construct(int $id, string $title, string $releaseDate)
+    public function __construct(array $data)
     {
-        $this->id = $id;
-        $this->title = $title;
-        $this->releaseDate = $releaseDate;
+        $this->age = $data['data'];
+        $this->title = $data['title'];
+        $this->name = $data['name'];
     }
 
     /**
      * @inheritDoc
      */
-    public function getId(): int
+    public function getAge(): int
     {
-        return $this->id;
+        return $this->age;
     }
 
     /**
@@ -54,8 +54,8 @@ class Film implements FilmInterface
     /**
      * @inheritDoc
      */
-    public function getReleaseDate(): string
+    public function getName(): string
     {
-        return $this->releaseDate;
+        return $this->name;
     }
 }
